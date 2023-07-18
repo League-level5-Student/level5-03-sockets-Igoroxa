@@ -13,7 +13,7 @@ public class ServerGreeter extends Thread {
 		socket = new ServerSocket(8080);
 		// *OPTIONAL* you can set a time limit for the server to wait by using the
 		// ServerSocket's setSoTimeout(int timeInMilliSeconds) method
-		socket.setSoTimeout(1000);
+		
 	}
 
 	public void run() {
@@ -43,13 +43,13 @@ public class ServerGreeter extends Thread {
 				DataInputStream in = new DataInputStream(connection.getInputStream());
 				// 12. Print the message from the DataInputStream object using the readUTF()
 				// method
-				in.readUTF();
+				System.out.println(in.readUTF());
 				// 13. Create a DataOutputStream object. When initializing it, use the Server
 				// object you created in step 9 to call the getOutputStream() method.
 				DataOutputStream out = new DataOutputStream(connection.getOutputStream());
 				// 14. Use the DataOutputStream object to send a message to the client using the
 				// writeUTF(String message) method.
-				out.writeUTF("message");
+				out.writeUTF("custom message");
 				// 15. Close the client server
 				socket.close();
 			} catch (SocketTimeoutException e) {

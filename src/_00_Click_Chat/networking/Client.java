@@ -59,4 +59,15 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
+	
+	public void sendMessage() {
+		try {
+			if (os != null) {
+				JOptionPane.showInputDialog("Enter Message To Send:");
+				os.flush();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
