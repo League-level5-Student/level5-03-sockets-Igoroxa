@@ -1,44 +1,42 @@
-package _00_Click_Chat.networking;
+package _02_Chat_Application;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
-public class Client {
+public class ChatClient {
 	private String ip;
 	private int port;
 
-	Socket connection;
+	Socket clientconnection;
 
 	ObjectOutputStream os;
 	ObjectInputStream is;
 
-	public Client(String ip, int port) {
+	public ChatClient(String ip, int port) {
 		this.ip = ip;
 		this.port = port;
 	}
 
-	public void start(){
+	public void start() {
 		try {
 
-			connection = new Socket(ip, port);
+			clientconnection = new Socket(ip, port);
 
-			os = new ObjectOutputStream(connection.getOutputStream());
-			is = new ObjectInputStream(connection.getInputStream());
+			os = new ObjectOutputStream(clientconnection.getOutputStream());
+			is = new ObjectInputStream(clientconnection.getInputStream());
 
 			os.flush();
 
-			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		while (connection.isConnected()) {
+
+		while (clientconnection.isConnected()) {
 			try {
 				JOptionPane.showMessageDialog(null, is.readObject());
 				System.out.println(is.readObject());
@@ -47,18 +45,22 @@ public class Client {
 				e.printStackTrace();
 			}
 		}
+
 	}
-	
-	public void sendClick() {
+
+	public void sendMessage(JTextField field) {
+
 		try {
 			if (os != null) {
-				os.writeObject("CLICK SENT FROM CLIENT");
+				os.writeObject(field.getText());
+				field.setText("");
 				os.flush();
+
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+
 		}
+
 	}
-	
-	
 }
